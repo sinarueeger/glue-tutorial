@@ -1,0 +1,70 @@
+---
+title: "Glue - a better paste"
+subtitle: "Lecture background"
+author: "Sina Rüeger"
+date: "July 13, 2020"
+output:
+  xaringan::moon_reader:
+    css: ["default-fonts", "default", "my-theme.css"]
+    lib_dir: libs
+    nature:
+      beforeInit: "https://platform.twitter.com/widgets.js"
+      highlightStyle: github
+      highlightLines: true
+      titleSlideClass: [top, right]
+      
+---
+
+<!-- 
+<!-- From here: https://slides.yihui.name/xaringan/ -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library <- function(...) suppressPackageStartupMessages(base::library(...))
+knitr::opts_chunk$set(
+  tidy = TRUE
+)
+```
+
+---
+layout: true
+
+
+---
+class: left, top
+
+# Learner persona description
+
+The learner persona I am addressing:
+
+- used paste before
+- has not seen glue
+
+---
+class: left, top
+
+# Concept map
+
+The mental model I intend to convey.
+
+<img border="0" alt="" src="data/mental-model.png" width="800">
+
+---
+class: left, top
+
+# Formative assessment 1
+
+multiple choice question, parsons problem
+
+---
+class: left, top
+# Formative assessment 2
+
+
+---
+class: left, top
+# Supporting slides
+
+Slides: [https://sinarueeger.github.io/???/slides#1](???)
+
+Examples: [https://github.com/sinarueeger/???](???)

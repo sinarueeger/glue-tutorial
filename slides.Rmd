@@ -1,0 +1,35 @@
+---
+title: "Glue - a better paste"
+author: "Sina Rüeger"
+date: "July 13, 2020"
+output:
+  xaringan::moon_reader:
+    css: ["default-fonts", "default", "my-theme.css"]
+    lib_dir: libs
+    nature:
+      beforeInit: "https://platform.twitter.com/widgets.js"
+      highlightStyle: github
+      highlightLines: true
+      titleSlideClass: [top, right]
+      
+---
+
+<!-- 
+<!-- From here: https://slides.yihui.name/xaringan/ -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library <- function(...) suppressPackageStartupMessages(base::library(...))
+knitr::opts_chunk$set(
+  tidy = TRUE
+)
+```
+
+---
+layout: true
+
+
+---
+class: left, top
+
+# glue vs paste

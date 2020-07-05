@@ -1,0 +1,50 @@
+/*  background-image: url(https://farm5.staticflickr.com/4504/24161677618_1d3332f35c_k_d.jpg);*/
+@import url(https://fonts.googleapis.com/css?family=Arvo);
+@import url(https://fonts.googleapis.com/css?family=Dosis);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css?family=Karla);
+@import url(https://fonts.googleapis.com/css?family=OpenSans);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+/* link color */
+a, a > code {
+  color: #0570b0; /*default: rgb(249, 38, 114); || sets color of links */
+  text-decoration: none; /* turns off background coloring of links */
+}
+
+body {
+  font-family: 'Dosis', 'Arvo', 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  font-size: 20%;
+}
+
+.big { font-size: 730% }
+.large { font-size: 130% }
+.small { font-size: 70% }
+.tiny { font-size: 40% }
+
+
+.title-slide {
+  background-color: #1a1a1a;
+/*---- background-image: url(img/DSC02269.png);*/
+  background-size: cover;
+}
+
+.title-slide h1, .title-slide h2, .title-slide h3 {
+  color: #ffffff;
+}
+
+
+h1, h2, h3 {  
+  font-family: 'Rajdhani', 'Dosis', 'Arvo', 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+  font-weight: normal;
+}
+
+
+/* link color 
+
+h1, h2, h3 {
+  font-family: 'Karla', 'Yanone Kaffeesatz', Helvetica;
+  font-weight: normal;
+  font-style: italic;
+}
+*/ 
