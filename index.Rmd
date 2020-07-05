@@ -65,6 +65,6 @@ class: left, top
 class: left, top
 # Supporting slides
 
-Slides: [https://sinarueeger.github.io/???/slides#1](???)
+Slides: [sinarueeger.github.io/glue-tutorial/slides.html#1)](https://sinarueeger.github.io/glue-tutorial/slides.html#1)
 
-Examples: [https://github.com/sinarueeger/???](???)
+Examples: [github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R](https://github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R)
