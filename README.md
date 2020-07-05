@@ -2,6 +2,6 @@
 
 Glue is the tidyverse answer to `paste`.
 
-- Slides: `slides.Rmd`
-- Lecture background: `index.Rmd`
+- Slides: `slides/slides.Rmd`
+- Lecture background: `slides/background.Rmd`
 - Examples: `glue-examples.R`
