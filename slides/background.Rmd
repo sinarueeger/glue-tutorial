@@ -79,7 +79,7 @@ class: left, top
 
 ```{r}
 library(glue)
-library(dplyr) ## contains the starwars dataset
+library(dplyr)
 ```
 
 ---
@@ -127,7 +127,8 @@ class: left, top
 
 Given the following data
 ```{r comment = "", tidy=FALSE}
-dat <- data.frame(element = c(1, 1, 2, 2), measure = c("A", "B", "A", "B"))
+dat <- data.frame(element = c(1, 1, 2, 2), 
+                  measure = c("A", "B", "A", "B"))
 dat
 ```
 
