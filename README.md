@@ -1,7 +1,7 @@
 # Glue tutorial
 
-Glue is the tidyverse answer to `paste`: https://github.com/tidyverse/glue.
+{glue} is the tidyverse answer to `paste`: https://github.com/tidyverse/glue.
 
-- Slides: `slides/slides.Rmd` (rendered [here](https://sinarueeger.github.io/glue-tutorial/slides/slides#1))
-- Lecture background: `slides/background.Rmd` (rendered [here](https://sinarueeger.github.io/glue-tutorial/slides/background#1))
-- Examples: `glue-examples.R`
+- Slides [here](https://sinarueeger.github.io/glue-tutorial/slides/slides#1)
+- Lecture background: [here](https://sinarueeger.github.io/glue-tutorial/slides/background#1)
+- Examples: [`glue-examples.R`](https://github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R)

@@ -1,5 +1,5 @@
 ---
-title: "Glue - a better paste"
+title: "Glue numbers and letters in R"
 subtitle: "Lecture background"
 author: "Sina Rüeger"
 date: "July 13, 2020"
@@ -33,27 +33,34 @@ layout: true
 ---
 class: left, top
 
-# Learner persona description
+# Learner persona description (1/2)
 
 The learner persona I am addressing:
 
-## background
+## Background
 - works in the field of biology & medicine
-- not a statistician, not a computer scientist
-- data analysis is not their core activity
+- spends an increasing amount of time doing data analysis
+- studied biology, hence not a statistician and not a computer scientist
 
-## experience
-- uses R a few times a week next to other software
-- used paste before
-- has not seen glue
+## Experience
+- uses R a few times per week, on average 2 hours per day.
+- used the function `paste` before
+- has not seen `glue`
 
-## needs
-- move faster from raw data to reports
-- produce nicer reports
 
-## special considerations
+---
+class: left, top
 
-- works on servers, hence may not be able to install glue
+# Learner persona description (2/2)
+
+
+## Needs
+- wants to move faster from raw data to reports
+- thinks that some parts of previous reports could be recycled and used by others
+
+## Special considerations
+
+- works sometimes on servers, hence may not be able to install glue there
 
 
 ---
@@ -68,26 +75,93 @@ The mental model I intend to convey.
 ---
 class: left, top
 
+# Requirements
+
+```{r}
+library(glue)
+library(dplyr) ## contains the starwars dataset
+```
+
+---
+class: left, top
+
 # Formative assessment 1
 
-- multiple choice question (glue, glue_data, glue_collapse)
-- parsons problem (order statements)
-- Tweak each of the following R commands so that they run correctly
-- Recreate the R code necessary to generate the following output.
-- predict R code (= use "last")
+Tweak the following R command so that it returns
+
+`Yesterdays average temperature was 20.2 celsius.`
+
+```{r eval=FALSE, include=TRUE}
+metric <- "celsius"
+temperature <- 20.2
+glue("Yesterdays average temperature was [metric] [temperature].")
+```
+
+## Solution
+Replace `[]` with `{}`, or set `.open = "["` and `.close = "]"`. 
+
 
 ---
 class: left, top
 # Formative assessment 2
 
+Predict the output of the following R code and choose solution 1, 2 or 3 below.
+
+```{r, eval=FALSE, include=TRUE}
+trees <- c("pine", "fir", "cedar", "spruce", "hemlock")
+glue_collapse(trees, sep = ",", last = "and")
+```
+
+1. `pine, fir, cedar, spruce and hemlock`
+1. `pine,fir,cedar,spruceandhemlock`
+1. `pine, fir, cedar, spruceandhemlock`
+
+## Solution
+2, the R code creates `pine,fir,cedar,spruceandhemlock`. 
 
 
+---
+class: left, top
+# Formative assessment 3
 
+
+Given the following data
+```{r comment = "", tidy=FALSE}
+dat <- data.frame(element = c(1, 1, 2, 2), measure = c("A", "B", "A", "B"))
+dat
+```
+
+create an extra column `id_measure` using `glue`:
+```{r echo=FALSE, comment = ""}
+dat %>% 
+  mutate(id = glue("{element}_{measure}"))
+```
+
+
+---
+class: left, top
+# Formative assessment 3
+
+## Solution
+
+```{r, comment = "", tidy=FALSE}
+dat %>% 
+  mutate(id = glue("{element}_{measure}"))
+```
 
 ---
 class: left, top
 # Supporting slides
 
-Slides: [sinarueeger.github.io/glue-tutorial/slides/slides.html#1)](https://sinarueeger.github.io/glue-tutorial/slides/slides.html#1)
+Slides: [sinarueeger.github.io/glue-tutorial/slides/slides.html#1](https://sinarueeger.github.io/glue-tutorial/slides/slides.html#1)
 
 Examples: [github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R](https://github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R)
+
+
+
+<!----  
+- Tweak each of the following R commands so that they run correctly
+- Predict R code (= use "last")
+- parsons problem (order statements)
+- Recreate the R code necessary to generate the following output. 
+------->
