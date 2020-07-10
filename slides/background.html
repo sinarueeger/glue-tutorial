@@ -80,7 +80,7 @@ class: left, top
 
 ```r
 library(glue)
-library(dplyr)  ## contains the starwars dataset
+library(dplyr)
 ```
 
 ---
@@ -131,7 +131,8 @@ class: left, top
 Given the following data
 
 ```r
-dat &lt;- data.frame(element = c(1, 1, 2, 2), measure = c("A", "B", "A", "B"))
+dat &lt;- data.frame(element = c(1, 1, 2, 2), 
+                  measure = c("A", "B", "A", "B"))
 dat
 ```
 
@@ -143,7 +144,7 @@ dat
 4       2       B
 ```
 
-create an extra column `id_measure` using `glue`:
+create an extra column `id` using `glue`:
 
 ```
   element measure  id

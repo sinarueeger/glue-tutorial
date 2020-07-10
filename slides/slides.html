@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Glue - a better paste</title>
+    <title>Glue numbers and letters in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Sina Rüeger" />
     <meta name="date" content="2020-07-13" />
@@ -13,7 +13,7 @@
     <textarea id="source">
 class: top, right, title-slide
 
-# Glue - a better paste
+# Glue numbers and letters in R
 ### Sina Rüeger
 ### July 13, 2020
 
@@ -28,11 +28,121 @@ class: top, right, title-slide
 ---
 layout: true
 
+---
+class: left, top
+
+Sometimes you want to do the following:
+
+## 1. Write analysis results as inline text
+
+
+```
+## # A tibble: 100 x 2
+##    id     state        
+##    &lt;fct&gt;  &lt;fct&gt;        
+##  1 id_982 South Karelia
+##  2 id_261 South Karelia
+##  3 id_331 Lapland      
+##  4 id_923 Uusimaa      
+##  5 id_858 Lapland      
+##  6 id_289 Lapland      
+##  7 id_319 Uusimaa      
+##  8 id_607 South Karelia
+##  9 id_749 Lapland      
+## 10 id_138 South Karelia
+## # … with 90 more rows
+```
+
+
+The study participants were from four different Finnish states: Ostrobothnia, Uusimaa, South Karelia and Lapland. 
 
 ---
 class: left, top
 
-# glue vs paste
+## 2. Create a new column as a function of two (text) columns
+
+
+
+```
+## # A tibble: 3 x 3
+##   chromosome position variant
+##        &lt;dbl&gt;    &lt;dbl&gt; &lt;glue&gt; 
+## 1          1       50 chr1_50
+## 2          1       30 chr1_30
+## 3          3       70 chr3_70
+```
+
+---
+class: left, top
+
+## 3. custom output file path
+
+define a directory at the beginning of a script and store everything there
+
+
+
+```r
+## save a plot
+ggsave("/data/haemoglobin/experiment-2020-07-13.pdf")
+
+## save data
+write_tsv(data, path = "/data/haemoglobin/experiment-2020-07-13.tsv")
+```
+
+
+
+
+---
+class: left, top
+
+# Solution: Combining R data objects into strings
+
+`This is some text {NUMBER} and {NUMBER}`
+
+For example:
+```
+This year,  South of Finland had on average 
+{NUMBER_SUN} days of sunshine and {NUMBER_SNOW} of days snowfall
+```
+
+results in
+```
+This year, South of Finland had on average 
+50 days of sunshine and 3 of days snowfall
+```
+
+---
+class: left, top
+
+# Glue!
+
+
+```r
+glue("This year,  South of Finland had on average {NUMBER_SUN} 
+     days of sunshine and {NUMBER_SNOW} of days snowfall", 
+     NUMBER_SUN = 50, NUMBER_SNOW = 3)
+```
+
+```
+This year,  South of Finland had on average 50 
+days of sunshine and 3 of days snowfall
+```
+
+---
+class: left, top
+
+# Live coding
+
+Go to [`glue-examples.R`](https://github.com/sinarueeger/glue-tutorial/blob/master/glue-examples.R)
+
+
+---
+class: left, top
+
+# Find out more
+
+- https://glue.tidyverse.org/index.html
+- glue also appears in the [`stringr` cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

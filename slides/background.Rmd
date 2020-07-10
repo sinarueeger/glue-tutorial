@@ -132,7 +132,7 @@ dat <- data.frame(element = c(1, 1, 2, 2),
 dat
 ```
 
-create an extra column `id_measure` using `glue`:
+create an extra column `id` using `glue`:
 ```{r echo=FALSE, comment = ""}
 dat %>% 
   mutate(id = glue("{element}_{measure}"))
