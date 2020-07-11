@@ -375,45 +375,66 @@ summary {
 <p>Sometimes you want to do the following:</p>
 <div id="write-analysis-results-as-inline-text" class="section level3">
 <h3>1. Write analysis results as inline text</h3>
-<pre><code>## # A tibble: 100 x 2
-##    id     state        
-##    &lt;fct&gt;  &lt;fct&gt;        
-##  1 id_732 Uusimaa      
-##  2 id_467 Ostrobothnia 
-##  3 id_538 South Karelia
-##  4 id_248 South Karelia
-##  5 id_507 South Karelia
-##  6 id_829 Uusimaa      
-##  7 id_228 Lapland      
-##  8 id_163 Ostrobothnia 
-##  9 id_363 Uusimaa      
-## 10 id_653 Lapland      
-## # … with 90 more rows</code></pre>
+<p>You have a dataset, such as the following data about individuals and their current living region in Finland:</p>
+<pre><code># A tibble: 100 x 2
+   id     state        
+   &lt;fct&gt;  &lt;fct&gt;        
+ 1 id_232 Uusimaa      
+ 2 id_326 Lapland      
+ 3 id_504 Lapland      
+ 4 id_356 Lapland      
+ 5 id_601 South Karelia
+ 6 id_237 South Karelia
+ 7 id_744 Lapland      
+ 8 id_515 Ostrobothnia 
+ 9 id_927 Uusimaa      
+10 id_619 Ostrobothnia 
+# … with 90 more rows</code></pre>
+<p>And you would like to make a statement in an R markdown file as follows:</p>
+<pre><code>```{r}
+states &lt;- &quot;Ostrobothnia, Uusimaa, South Karelia and Lapland&quot;
+```
+The study participants were from four different Finnish states: `r states`. </code></pre>
+<p>so it produces:</p>
+<blockquote>
 <p>The study participants were from four different Finnish states: Ostrobothnia, Uusimaa, South Karelia and Lapland.</p>
+</blockquote>
 </div>
 <div id="create-a-new-column-as-a-function-of-two-text-columns" class="section level3">
 <h3>2. Create a new column as a function of two (text) columns</h3>
-<pre><code>## # A tibble: 3 x 3
-##   chromosome position variant
-##        &lt;dbl&gt;    &lt;dbl&gt; &lt;glue&gt; 
-## 1          1       50 chr1_50
-## 2          1       30 chr1_30
-## 3          3       70 chr3_70</code></pre>
+<p>We can create a new column as a function of two numeric columns, for example calcualte the BMI based on a weight and a height column.</p>
+<p>We can also concatenate columns, ultimately yielding character columns.</p>
+<p>Here is an example where where we concatenate two columns that are integers, but become characters once combined.</p>
+<pre><code># A tibble: 3 x 3
+  chromosome position variant
+       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+1          1       50 chr1_50
+2          1       30 chr1_30
+3          3       70 chr3_70</code></pre>
 </div>
 <div id="custom-output-file-path" class="section level3">
-<h3>3. custom output file path</h3>
-<p>define a directory at the beginning of a script and store everything there</p>
+<h3>3. Custom output file path</h3>
+<p>During the course of a data analysis, we want to store out data or data visualizations using the same basename <code>/data/haemoglobin/experiment-2020-07-13</code>:</p>
 <pre class="r"><code>## save a plot
 ggsave(&quot;/data/haemoglobin/experiment-2020-07-13.pdf&quot;)
 
 ## save data
 write_tsv(data, path = &quot;/data/haemoglobin/experiment-2020-07-13.tsv&quot;)</code></pre>
+<p>Instead of repetition, it would be handy if we could do the following:</p>
+<pre class="r"><code>basename &lt;- &quot;/data/haemoglobin/experiment-2020-07-13&quot;
+
+## save a plot
+ggsave(&quot;{basename}.pdf&quot;)
+
+## save data
+write_tsv(data, path = &quot;{basename}.tsv&quot;)</code></pre>
 </div>
 </div>
 <div id="solution-combining-r-data-objects-into-strings" class="section level2">
 <h2>Solution: Combining R data objects into strings</h2>
+<p>For these three examples, there is a solution that uses the same framework.</p>
 <p><code>This is some text {NUMBER} and {NUMBER}</code></p>
-<p>For example:</p>
+<p>For example, if we define <code>NUMBER_SUN</code> and <code>NUMBER_SNOW</code>, then</p>
 <pre><code>This year,  South of Finland had on average 
 {NUMBER_SUN} days of sunshine and {NUMBER_SNOW} of days snowfall</code></pre>
 <p>results in</p>
@@ -422,27 +443,39 @@ write_tsv(data, path = &quot;/data/haemoglobin/experiment-2020-07-13.tsv&quot;)<
 </div>
 <div id="glue" class="section level2">
 <h2>Glue!</h2>
+<p>The R package <a href="https://github.com/tidyverse/glue">glue</a> does exactly that.</p>
+<p>Here is the example from before:</p>
 <pre class="r"><code>glue(&quot;This year,  South of Finland had on average {NUMBER_SUN} 
      days of sunshine and {NUMBER_SNOW} of days snowfall&quot;, 
      NUMBER_SUN = 50, NUMBER_SNOW = 3)</code></pre>
 <pre><code>This year,  South of Finland had on average 50 
 days of sunshine and 3 of days snowfall</code></pre>
+<p>If you have used the function <code>paste</code> before, then think of glue as the tidyverse answer to paste.</p>
 </div>
 <div id="live-coding" class="section level2">
 <h2>Live coding</h2>
 <pre class="r"><code>## install.packages(&quot;glue&quot;)
 library(glue)
 library(dplyr)</code></pre>
-<div id="glue-two-scalars" class="section level3">
-<h3>glue two scalars</h3>
+<p>Explore all functions:</p>
+<pre class="r"><code>apropos(&quot;glue&quot;)</code></pre>
+<pre><code> [1] &quot;as_glue&quot;        &quot;glue&quot;           &quot;glue_col&quot;       &quot;glue_collapse&quot; 
+ [5] &quot;glue_data&quot;      &quot;glue_data_col&quot;  &quot;glue_data_safe&quot; &quot;glue_data_sql&quot; 
+ [9] &quot;glue_safe&quot;      &quot;glue_sql&quot;      </code></pre>
+<p>We are going to look at - <code>glue</code> - <code>glue_collapse</code> - <code>glue_data</code></p>
+<div id="glue-two-elements" class="section level3">
+<h3>Glue two elements</h3>
+<p>Glue one element (<code>animals</code>).</p>
 <pre class="r"><code>animals &lt;- &quot;Elephants&quot;
-number &lt;- 3
-glue(&quot;There were {animals}&quot;)</code></pre>
-<pre><code>## There were Elephants</code></pre>
-<pre class="r"><code>glue(&quot;There were {number} {animals}&quot;)</code></pre>
-<pre><code>## There were 3 Elephants</code></pre>
-<pre class="r"><code>glue(&quot;There were {number} {animals}&quot;, number = 2, animals = &quot;Giraffe&quot;)</code></pre>
-<pre><code>## There were 2 Giraffe</code></pre>
+glue(&quot;There were {animals}.&quot;)</code></pre>
+<pre><code>There were Elephants.</code></pre>
+<p>Glue two elements.</p>
+<pre class="r"><code>number &lt;- 3
+glue(&quot;There were {number} {animals}.&quot;)</code></pre>
+<pre><code>There were 3 Elephants.</code></pre>
+<p>Glue two elements, but define them within the `glue`` command.</p>
+<pre class="r"><code>glue(&quot;There were {number} {animals}.&quot;, number = 2, animals = &quot;Giraffe&quot;)</code></pre>
+<pre><code>There were 2 Giraffe.</code></pre>
 </div>
 <div id="exercise" class="section level3">
 <h3>Exercise</h3>
@@ -450,79 +483,115 @@ glue(&quot;There were {animals}&quot;)</code></pre>
 <pre class="r"><code>metric &lt;- &quot;celsius&quot;
 temperature &lt;- 20.2
 glue(&quot;Yesterdays average temperature was [metric] [temperature].&quot;)</code></pre>
-<pre><code>## Yesterdays average temperature was [metric] [temperature].</code></pre>
 </div>
 <div id="collapse-vector" class="section level3">
 <h3>Collapse vector</h3>
 <p>Collapse the elements in a vector</p>
-<pre class="r"><code>genes &lt;- c(&quot;FTO&quot;, &quot;PSCK3&quot;, &quot;DTN3&quot;, &quot;NRT&quot;)
+<pre class="r"><code>genes &lt;- c(&quot;FTO&quot;, &quot;PSCK3&quot;, &quot;DTN3&quot;)
 glue_collapse(genes)</code></pre>
-<pre><code>## FTOPSCK3DTN3NRT</code></pre>
+<pre><code>FTOPSCK3DTN3</code></pre>
+<p>Collapse the elements and separate them with a <code>+</code>.</p>
 <pre class="r"><code>glue_collapse(genes, sep = &quot; + &quot;)</code></pre>
-<pre><code>## FTO + PSCK3 + DTN3 + NRT</code></pre>
+<pre><code>FTO + PSCK3 + DTN3</code></pre>
 </div>
 <div id="exercise-1" class="section level3">
 <h3>Exercise</h3>
-<p>Predict the output of the following R code and choose solution 1, 2 or 3 below.</p>
-<pre class="r"><code>trees &lt;- c(&quot;pine&quot;, &quot;fir&quot;, &quot;cedar&quot;, &quot;spruce&quot;, &quot;hemlock&quot;)
+<p>Predict the output of the following R code and choose solution 1, 2, 3 or 4 below.</p>
+<pre class="r"><code>trees &lt;- c(&quot;pine&quot;, &quot;fir&quot;, &quot;cedar&quot;)
 glue_collapse(trees, sep = &quot;,&quot;, last = &quot;and&quot;)</code></pre>
-<pre><code>## pine,fir,cedar,spruceandhemlock</code></pre>
+<pre><code>pine,firandcedar</code></pre>
 <ol style="list-style-type: decimal">
-<li><code>pine, fir, cedar, spruce and hemlock</code></li>
-<li><code>pine,fir,cedar,spruceandhemlock</code></li>
-<li><code>pine, fir, cedar, spruceandhemlock</code></li>
+<li><code>pine, fir and cedar</code></li>
+<li><code>pine,firandcedar</code></li>
+<li><code>pine,fir,cedar</code></li>
+<li><code>pine, firandcedar</code></li>
 </ol>
 </div>
 <div id="create-new-column-with-pipe" class="section level3">
 <h3>Create new column with pipe</h3>
 <pre class="r"><code>starwars %&gt;% select(name, homeworld) %&gt;% mutate(name_homeworld = glue(&quot;{name} ({homeworld})&quot;))</code></pre>
-<pre><code>## # A tibble: 87 x 3
-##    name               homeworld name_homeworld               
-##    &lt;chr&gt;              &lt;chr&gt;     &lt;glue&gt;                       
-##  1 Luke Skywalker     Tatooine  Luke Skywalker (Tatooine)    
-##  2 C-3PO              Tatooine  C-3PO (Tatooine)             
-##  3 R2-D2              Naboo     R2-D2 (Naboo)                
-##  4 Darth Vader        Tatooine  Darth Vader (Tatooine)       
-##  5 Leia Organa        Alderaan  Leia Organa (Alderaan)       
-##  6 Owen Lars          Tatooine  Owen Lars (Tatooine)         
-##  7 Beru Whitesun lars Tatooine  Beru Whitesun lars (Tatooine)
-##  8 R5-D4              Tatooine  R5-D4 (Tatooine)             
-##  9 Biggs Darklighter  Tatooine  Biggs Darklighter (Tatooine) 
-## 10 Obi-Wan Kenobi     Stewjon   Obi-Wan Kenobi (Stewjon)     
-## # … with 77 more rows</code></pre>
+<pre><code># A tibble: 87 x 3
+   name               homeworld name_homeworld               
+   &lt;chr&gt;              &lt;chr&gt;     &lt;glue&gt;                       
+ 1 Luke Skywalker     Tatooine  Luke Skywalker (Tatooine)    
+ 2 C-3PO              Tatooine  C-3PO (Tatooine)             
+ 3 R2-D2              Naboo     R2-D2 (Naboo)                
+ 4 Darth Vader        Tatooine  Darth Vader (Tatooine)       
+ 5 Leia Organa        Alderaan  Leia Organa (Alderaan)       
+ 6 Owen Lars          Tatooine  Owen Lars (Tatooine)         
+ 7 Beru Whitesun lars Tatooine  Beru Whitesun lars (Tatooine)
+ 8 R5-D4              Tatooine  R5-D4 (Tatooine)             
+ 9 Biggs Darklighter  Tatooine  Biggs Darklighter (Tatooine) 
+10 Obi-Wan Kenobi     Stewjon   Obi-Wan Kenobi (Stewjon)     
+# … with 77 more rows</code></pre>
 </div>
 <div id="create-new-vector-with-pipe" class="section level3">
 <h3>Create new vector with pipe</h3>
+<p>If we want a vector instead, we can use <code>glue_data</code> directly on the two columns.</p>
 <pre class="r"><code>vec &lt;- starwars %&gt;% glue_data(&quot;{name} ({homeworld})&quot;, .na = &quot;unknown&quot;)
 head(vec)</code></pre>
-<pre><code>## Luke Skywalker (Tatooine)
-## C-3PO (Tatooine)
-## R2-D2 (Naboo)
-## Darth Vader (Tatooine)
-## Leia Organa (Alderaan)
-## Owen Lars (Tatooine)</code></pre>
+<pre><code>Luke Skywalker (Tatooine)
+C-3PO (Tatooine)
+R2-D2 (Naboo)
+Darth Vader (Tatooine)
+Leia Organa (Alderaan)
+Owen Lars (Tatooine)</code></pre>
 </div>
 <div id="exercise-2" class="section level3">
 <h3>Exercise</h3>
-<p>iven the data below, create an extra column id, which is a combination of element and measure, separated with an underscore (e.g. <code>1_A</code>)</p>
+<p>Given the data</p>
 <pre class="r"><code>dat &lt;- data.frame(element = c(1, 1, 2, 2), 
-                  measure = c(&quot;A&quot;, &quot;B&quot;, &quot;A&quot;, &quot;B&quot;))</code></pre>
+                  measure = c(&quot;A&quot;, &quot;B&quot;, &quot;A&quot;, &quot;B&quot;))
+dat</code></pre>
+<pre><code>  element measure
+1       1       A
+2       1       B
+3       2       A
+4       2       B</code></pre>
+<p>create an extra column <code>id</code>, which is a combination of <code>element</code> and <code>measure</code>, separated with an underscore (e.g. <code>1</code> and <code>A</code> become <code>1_A</code>)</p>
+<pre><code>  element measure  id
+1       1       A 1_A
+2       1       B 1_B
+3       2       A 2_A
+4       2       B 2_B</code></pre>
+</div>
+</div>
+<div id="fix-intial-problems" class="section level2">
+<h2>Fix intial problems</h2>
+<div id="write-analysis-results-as-inline-text-1" class="section level3">
+<h3>1. Write analysis results as inline text</h3>
+<pre><code>```{r}
+states &lt;- c(&quot;Ostrobothnia&quot;, &quot;Uusimaa&quot;, &quot;South Karelia&quot;, &quot;Lapland&quot;)
+```
+The study participants were from four different Finnish states: `r glue(states, sep = &quot;, &quot;, last = &quot; and &quot;)`. </code></pre>
+</div>
+<div id="create-a-new-column-as-a-function-of-two-text-columns-1" class="section level3">
+<h3>2. Create a new column as a function of two (text) columns</h3>
+<pre class="r"><code>dat &lt;- as_tibble(data.frame(chromosome = c(1, 1, 3), position = c(50, 30, 70)) %&gt;% 
+  mutate(variant = as.character(glue(&quot;chr{chromosome}_{position}&quot;))))
+dat</code></pre>
+<pre><code># A tibble: 3 x 3
+  chromosome position variant
+       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
+1          1       50 chr1_50
+2          1       30 chr1_30
+3          3       70 chr3_70</code></pre>
 </div>
 <div id="combine-directory-and-file-name" class="section level3">
-<h3>Combine directory and file name</h3>
-<pre class="r"><code>dat &lt;- starwars %&gt;% select(name, homeworld) 
-dir &lt;- &quot;/Users/rueger/Projects/&quot; 
-filename &lt;- &quot;table_1.txt&quot;
+<h3>3. Combine directory and file name</h3>
+<p>Lastly, to answer problem 3) from the beginning:</p>
+<pre class="r"><code>dir &lt;- &quot;/data/haemoglobin/&quot;
+basename &lt;- &quot;experiment-2020-07-13&quot;
 
-readr::write_tsv(dat, path = glue(&quot;{dir}{filename}&quot;))</code></pre>
+## save a plot
+ggsave(glue(&quot;{dir}{basename}.pdf&quot;))
+
+## save data
+write_tsv(data, path = glue(&quot;{dir}{basename}.tsv&quot;))</code></pre>
 </div>
 </div>
 <div id="find-out-more" class="section level2">
 <h2>Find out more</h2>
-<pre class="r"><code>apropos(&quot;glue&quot;)</code></pre>
-<pre><code>##  [1] &quot;as_glue&quot;        &quot;glue&quot;           &quot;glue_col&quot;       &quot;glue_collapse&quot; 
-##  [5] &quot;glue_data&quot;      &quot;glue_data_col&quot;  &quot;glue_data_safe&quot; &quot;glue_data_sql&quot; 
-##  [9] &quot;glue_safe&quot;      &quot;glue_sql&quot;</code></pre>
 <ul>
 <li><a href="https://glue.tidyverse.org/index.html" class="uri">https://glue.tidyverse.org/index.html</a></li>
 <li>glue also appears in the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf"><code>stringr</code> cheatsheet</a></li>

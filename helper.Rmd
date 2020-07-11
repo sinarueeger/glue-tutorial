@@ -1,0 +1,4 @@
+```{r}
+states <- "Ostrobothnia, Uusimaa, South Karelia and Lapland"
+```
+The study participants were from four different Finnish states: `r states`. 

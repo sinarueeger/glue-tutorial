@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment = "")
 library(dplyr)
 library(glue)
 ```
@@ -17,34 +17,45 @@ Sometimes you want to do the following:
 
 ### 1. Write analysis results as inline text
 
+You have a dataset, such as the following data about individuals and their current living region in Finland:
+
 ```{r echo=FALSE}
 n <- 100
 dat_study <- as_tibble(data.frame(id = glue("id_{id}", id = sample(100:999, n)), state = sample(c("Uusimaa", "Ostrobothnia", "South Karelia", "Lapland"), n, replace = TRUE))) 
 dat_study
 ```
 
-```{r include=FALSE, tidy=FALSE}
-states <- glue_collapse(unique(dat_study$state), sep = ", ", last = " and ")
-glue("The study participants were from four different Finnish states: {states}.")
+And you would like to make a statement in an R markdown file as follows: 
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("helper.Rmd"))
 ```
-The study participants were from four different Finnish states: Ostrobothnia, Uusimaa, South Karelia and Lapland. 
 
+so it produces:
+```{r, include = FALSE}
+states <- "Ostrobothnia, Uusimaa, South Karelia and Lapland"
+```
 
+> The study participants were from four different Finnish states: `r states`. 
 
 ### 2. Create a new column as a function of two (text) columns
 
+We can create a new column as a function of two numeric columns, for example calcualte the BMI based on a weight and a height column. 
+
+We can also concatenate columns, ultimately yielding character columns.
+
+Here is an example where where we concatenate two columns that are integers, but become characters once combined.
 
 ```{r echo=FALSE}
 dat <- as_tibble(data.frame(chromosome = c(1, 1, 3), position = c(50, 30, 70)) %>% 
-  mutate(variant = glue("chr{chromosome}_{position}")))
+  mutate(variant = as.character(glue("chr{chromosome}_{position}"))))
 dat
 ```
 
 
-### 3. custom output file path
+### 3. Custom output file path
 
-define a directory at the beginning of a script and store everything there
-
+During the course of a data analysis, we want to store out data or data visualizations using the same basename `/data/haemoglobin/experiment-2020-07-13`:
 
 ```{r, eval = FALSE}
 ## save a plot
@@ -54,12 +65,25 @@ ggsave("/data/haemoglobin/experiment-2020-07-13.pdf")
 write_tsv(data, path = "/data/haemoglobin/experiment-2020-07-13.tsv")
 ```
 
+Instead of repetition, it would be handy if we could do the following:
+
+```{r, eval = FALSE}
+basename <- "/data/haemoglobin/experiment-2020-07-13"
+
+## save a plot
+ggsave("{basename}.pdf")
+
+## save data
+write_tsv(data, path = "{basename}.tsv")
+```
 
 ## Solution: Combining R data objects into strings
 
+For these three examples, there is a solution that uses the same framework. 
+
 `This is some text {NUMBER} and {NUMBER}`
 
-For example:
+For example, if we define `NUMBER_SUN` and `NUMBER_SNOW`, then
 ```
 This year,  South of Finland had on average 
 {NUMBER_SUN} days of sunshine and {NUMBER_SNOW} of days snowfall
@@ -73,6 +97,9 @@ This year, South of Finland had on average
 
 ## Glue!
 
+The R package [glue](https://github.com/tidyverse/glue) does exactly that. 
+
+Here is the example from before: 
 ```{r, comment = "", tidy = FALSE}
 glue("This year,  South of Finland had on average {NUMBER_SUN} 
      days of sunshine and {NUMBER_SNOW} of days snowfall", 
@@ -80,8 +107,7 @@ glue("This year,  South of Finland had on average {NUMBER_SUN}
 ```
 
 
-glue is the tidyverse answer to paste: https://github.com/tidyverse/glue.
-
+If you have used the function `paste` before, then think of glue as the tidyverse answer to paste. 
 
 ## Live coding
 
@@ -91,28 +117,42 @@ library(glue)
 library(dplyr)
 ```
 
+Explore all functions:
+```{r}
+apropos("glue")
+```
 
-### glue two scalars
+We are going to look at
+- `glue`
+- `glue_collapse`
+- `glue_data`
+
+### Glue two elements
+
+Glue one element (`animals`).
+
 ```{r}
 animals <- "Elephants"
+glue("There were {animals}.")
+```
+
+Glue two elements.
+
+```{r}
 number <- 3
-glue("There were {animals}")
+glue("There were {number} {animals}.")
 ```
 
+Glue two elements, but define them within the `glue`` command.
 ```{r}
-glue("There were {number} {animals}")
+glue("There were {number} {animals}.", number = 2, animals = "Giraffe")
 ```
-
-```{r}
-glue("There were {number} {animals}", number = 2, animals = "Giraffe")
-```
-
 
 ### Exercise
 
 Tweak the following R command so that it returns: `Yesterdays average temperature was 20.2 celsius.`
 
-```{r}
+```{r, eval = FALSE}
 metric <- "celsius"
 temperature <- 20.2
 glue("Yesterdays average temperature was [metric] [temperature].")
@@ -123,23 +163,28 @@ glue("Yesterdays average temperature was [metric] [temperature].")
 Collapse the elements in a vector
 
 ```{r}
-genes <- c("FTO", "PSCK3", "DTN3", "NRT")
+genes <- c("FTO", "PSCK3", "DTN3")
 glue_collapse(genes)
+```
+
+Collapse the elements and separate them with a `+`. 
+```{r}
 glue_collapse(genes, sep = " + ")
 ```
 
 ### Exercise
 
-Predict the output of the following R code and choose solution 1, 2 or 3 below.
+Predict the output of the following R code and choose solution 1, 2, 3 or 4 below.
 
 ```{r}
-trees <- c("pine", "fir", "cedar", "spruce", "hemlock")
+trees <- c("pine", "fir", "cedar")
 glue_collapse(trees, sep = ",", last = "and")
 ```
 
-1. `pine, fir, cedar, spruce and hemlock`
-1. `pine,fir,cedar,spruceandhemlock`
-1. `pine, fir, cedar, spruceandhemlock`
+1. `pine, fir and cedar`
+1. `pine,firandcedar`
+1. `pine,fir,cedar`
+1. `pine, firandcedar`
 
 
 ### Create new column with pipe 
@@ -150,6 +195,8 @@ starwars %>% select(name, homeworld) %>% mutate(name_homeworld = glue("{name} ({
 
 ### Create new vector with pipe
 
+If we want a vector instead, we can use `glue_data` directly on the two columns. 
+
 ```{r}
 vec <- starwars %>% glue_data("{name} ({homeworld})", .na = "unknown")
 head(vec)
@@ -157,29 +204,54 @@ head(vec)
 
 ### Exercise
 
-iven the data below, create an extra column id, which is a combination of element and measure, separated with an underscore (e.g. `1_A`)
-
-```{r}
+Given the data 
+```{r echo=TRUE}
 dat <- data.frame(element = c(1, 1, 2, 2), 
                   measure = c("A", "B", "A", "B"))
+dat
+```
+create an extra column `id`, which is a combination of `element` and `measure`, separated with an underscore (e.g. `1` and `A` become `1_A`)
+
+```{r echo=FALSE, comment = ""}
+dat %>% 
+  mutate(id = glue("{element}_{measure}"))
 ```
 
-### Combine directory and file name
+## Fix intial problems
 
-```{r}
-dat <- starwars %>% select(name, homeworld) 
-dir <- "/Users/rueger/Projects/" 
-filename <- "table_1.txt"
+### 1. Write analysis results as inline text
 
-readr::write_tsv(dat, path = glue("{dir}{filename}"))
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("helper_solution.Rmd"))
 ```
+
+### 2. Create a new column as a function of two (text) columns
+
+```{r }
+dat <- as_tibble(data.frame(chromosome = c(1, 1, 3), position = c(50, 30, 70)) %>% 
+  mutate(variant = as.character(glue("chr{chromosome}_{position}"))))
+dat
+```
+
+### 3. Combine directory and file name
+
+Lastly, to answer problem 3) from the beginning: 
+
+
+```{r, eval = FALSE}
+dir <- "/data/haemoglobin/"
+basename <- "experiment-2020-07-13"
+
+## save a plot
+ggsave(glue("{dir}{basename}.pdf"))
+
+## save data
+write_tsv(data, path = glue("{dir}{basename}.tsv"))
+```
+
 
 
 ## Find out more
-
-```{r}
-apropos("glue")
-```
 
 - https://glue.tidyverse.org/index.html
 - glue also appears in the [`stringr` cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf)
