@@ -60,7 +60,7 @@ class: left, top
 
 ## Special considerations
 
-- works sometimes on servers, hence may not be able to install glue there
+- works sometimes on high-performance computing clusters, hence installing glue might be a problem
 
 
 ---
@@ -107,20 +107,21 @@ Replace `[]` with `{}`, or set `.open = "["` and `.close = "]"`.
 class: left, top
 # Formative assessment 2
 
-Predict the output of the following R code and choose solution 1, 2 or 3 below.
+Predict the output of the following R code and choose solution 1, 2, 3 or 4 below.
 
 
 ```r
-trees &lt;- c("pine", "fir", "cedar", "spruce", "hemlock")
+trees &lt;- c("pine", "fir", "cedar")
 glue_collapse(trees, sep = ",", last = "and")
 ```
 
-1. `pine, fir, cedar, spruce and hemlock`
-1. `pine,fir,cedar,spruceandhemlock`
-1. `pine, fir, cedar, spruceandhemlock`
+1. `pine, fir and cedar`
+1. `pine,firandcedar`
+1. `pine,fir,cedar`
+1. `pine, firandcedar`
 
 ## Solution
-2, the R code creates `pine,fir,cedar,spruceandhemlock`. 
+2, the R code creates `pine,firandcedar`. 
 
 
 ---
