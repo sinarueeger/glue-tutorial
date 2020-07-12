@@ -122,36 +122,6 @@ glue_collapse(trees, sep = ",", last = "and")
 
 ---
 class: left, top
-# Formative assessment 3
-
-
-Given the following data
-```{r comment = "", tidy=FALSE}
-dat <- data.frame(element = c(1, 1, 2, 2), 
-                  measure = c("A", "B", "A", "B"))
-dat
-```
-
-create an extra column `id` using `glue`:
-```{r echo=FALSE, comment = ""}
-dat %>% 
-  mutate(id = glue("{element}_{measure}"))
-```
-
-
----
-class: left, top
-# Formative assessment 3
-
-## Solution
-
-```{r, comment = "", tidy=FALSE}
-dat %>% 
-  mutate(id = glue("{element}_{measure}"))
-```
-
----
-class: left, top
 # Supporting Material
 
 - RMarkdown file: [sinarueeger.github.io/glue-tutorial/glue](https://sinarueeger.github.io/glue-tutorial/glue)
