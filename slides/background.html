@@ -43,7 +43,8 @@ The learner persona I am addressing:
 - studied biology, hence not a statistician and not a computer scientist
 
 ## Experience
-- uses R a few times per week, on average 2 hours per day.
+- uses R a few times per week, on average 2 hours per day
+- knows RMarkdown
 - used the function `paste` before
 - has not seen `glue`
 
@@ -96,7 +97,7 @@ Tweak the following R command so that it returns
 ```r
 metric &lt;- "celsius"
 temperature &lt;- 20.2
-glue("Yesterdays average temperature was [metric] [temperature].")
+glue("Yesterdays average temperature was [temperature] [metric].")
 ```
 
 ## Solution
@@ -118,7 +119,7 @@ glue_collapse(trees, sep = ",", last = "and")
 1. `pine, fir and cedar`
 1. `pine,firandcedar`
 1. `pine,fir,cedar`
-1. `pine, firandcedar`
+1. `pine + fir + cedar`
 
 ## Solution
 2, the R code creates `pine,firandcedar`. 

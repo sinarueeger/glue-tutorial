@@ -356,16 +356,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 100 x 3
    id     state         height
    &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
- 1 id_406 Ostrobothnia    198.
- 2 id_854 Uusimaa         193.
- 3 id_205 South Karelia   167.
- 4 id_844 South Karelia   174.
- 5 id_450 Lapland         189.
- 6 id_211 Lapland         172.
- 7 id_503 Uusimaa         192.
- 8 id_560 Uusimaa         151.
- 9 id_566 Lapland         192.
-10 id_189 Ostrobothnia    181.
+ 1 id_940 Uusimaa         175.
+ 2 id_479 Lapland         160.
+ 3 id_797 Uusimaa         151.
+ 4 id_525 Uusimaa         173.
+ 5 id_499 Ostrobothnia    169.
+ 6 id_688 Uusimaa         154.
+ 7 id_389 South Karelia   158.
+ 8 id_366 South Karelia   160.
+ 9 id_742 Uusimaa         166.
+10 id_298 Lapland         172.
 # … with 90 more rows</code></pre>
 <p>And you would like to make a statement in an R markdown file as follows:</p>
 <pre><code>```{r}
@@ -402,12 +402,12 @@ The study participants were from four different Finnish states:
 <h2>Solution: Combining R data objects into strings</h2>
 <p>To tackle these two problems, we need a solution that can combine numbers and characters into strings.</p>
 <p><code>This is some text + NUMBER + TEXT.</code></p>
-<p>For example, if we define <code>N_SUN</code> and <code>N_SNOW</code>, then</p>
+<p>For example, if we define <code>SUN</code> and <code>SNOW</code>, then</p>
 <pre><code>SUN = 50
 SNOW = 3
 &quot;This year, South of Finland had on average&quot; + 
-NUMBER_SUN + &quot;days of sunshine and&quot; + 
-NUMBER_SNOW + &quot;of days snowfall.&quot;</code></pre>
+SUN + &quot;days of sunshine and&quot; + 
+SNOW + &quot;of days snowfall.&quot;</code></pre>
 <p>results in</p>
 <pre><code>This year, South of Finland had on average 
 50 days of sunshine and 3 of days snowfall.</code></pre>
@@ -454,17 +454,17 @@ days of sunshine and 3 of days snowfall.</code></pre>
 <p>Tweak the following R command so that it returns: <code>Yesterdays average temperature was 20.2 celsius.</code></p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">metric &lt;-<span class="st"> &quot;celsius&quot;</span></a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">temperature &lt;-<span class="st"> </span><span class="fl">20.2</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;Yesterdays average temperature was [metric] [temperature].&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;Yesterdays average temperature was [temperature] [metric].&quot;</span>)</a></code></pre></div>
 </div>
 <div id="collapse-vector" class="section level3">
 <h3>Collapse vector</h3>
 <p>Collapse the elements in a vector</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FTO&quot;</span>, <span class="st">&quot;PSCK3&quot;</span>, <span class="st">&quot;DTN3&quot;</span>)</a>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FTO&quot;</span>, <span class="st">&quot;APOE&quot;</span>, <span class="st">&quot;PCSK9&quot;</span>)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">glue_collapse</span>(genes)</a></code></pre></div>
-<pre><code>FTOPSCK3DTN3</code></pre>
+<pre><code>FTOAPOEPCSK9</code></pre>
 <p>Collapse the elements and separate them with a <code>+</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">glue_collapse</span>(genes, <span class="dt">sep =</span> <span class="st">&quot; + &quot;</span>)</a></code></pre></div>
-<pre><code>FTO + PSCK3 + DTN3</code></pre>
+<pre><code>FTO + APOE + PCSK9</code></pre>
 </div>
 <div id="exercise-1" class="section level3">
 <h3>Exercise</h3>
@@ -476,7 +476,7 @@ days of sunshine and 3 of days snowfall.</code></pre>
 <li><code>pine, fir and cedar</code></li>
 <li><code>pine,firandcedar</code></li>
 <li><code>pine,fir,cedar</code></li>
-<li><code>pine, firandcedar</code></li>
+<li><code>pine + fir + cedar</code></li>
 </ol>
 </div>
 </div>

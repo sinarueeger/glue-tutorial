@@ -94,7 +94,7 @@ Tweak the following R command so that it returns
 ```{r eval=FALSE, include=TRUE}
 metric <- "celsius"
 temperature <- 20.2
-glue("Yesterdays average temperature was [metric] [temperature].")
+glue("Yesterdays average temperature was [temperature] [metric].")
 ```
 
 ## Solution
@@ -115,7 +115,7 @@ glue_collapse(trees, sep = ",", last = "and")
 1. `pine, fir and cedar`
 1. `pine,firandcedar`
 1. `pine,fir,cedar`
-1. `pine, firandcedar`
+1. `pine + fir + cedar`
 
 ## Solution
 2, the R code creates `pine,firandcedar`. 

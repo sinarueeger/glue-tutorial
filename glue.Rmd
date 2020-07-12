@@ -72,13 +72,13 @@ To tackle these two problems, we need a solution that can combine numbers and ch
 
 `This is some text + NUMBER + TEXT.`
 
-For example, if we define `N_SUN` and `N_SNOW`, then
+For example, if we define `SUN` and `SNOW`, then
 ```
 SUN = 50
 SNOW = 3
 "This year, South of Finland had on average" + 
-NUMBER_SUN + "days of sunshine and" + 
-NUMBER_SNOW + "of days snowfall."
+SUN + "days of sunshine and" + 
+SNOW + "of days snowfall."
 ```
 
 results in
@@ -145,7 +145,7 @@ Tweak the following R command so that it returns:
 ```{r, eval = FALSE}
 metric <- "celsius"
 temperature <- 20.2
-glue("Yesterdays average temperature was [metric] [temperature].")
+glue("Yesterdays average temperature was [temperature] [metric].")
 ```
 
 ### Collapse vector
@@ -153,7 +153,7 @@ glue("Yesterdays average temperature was [metric] [temperature].")
 Collapse the elements in a vector
 
 ```{r}
-genes <- c("FTO", "PSCK3", "DTN3")
+genes <- c("FTO", "APOE", "PCSK9")
 glue_collapse(genes)
 ```
 
@@ -174,7 +174,7 @@ glue_collapse(trees, sep = ",", last = "and")
 1. `pine, fir and cedar`
 1. `pine,firandcedar`
 1. `pine,fir,cedar`
-1. `pine, firandcedar`
+1. `pine + fir + cedar`
 
 
 ## Fix intial problems
