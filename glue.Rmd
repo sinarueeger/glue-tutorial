@@ -66,23 +66,6 @@ ggsave("{dir_p}{basename}.pdf")
 write_tsv(data, path = "{dir_t}{basename}.tsv")
 ```
 
-## Solution: Combining R data objects into strings
-
-For these three examples, there is a solution that uses the same framework. 
-
-`This is some text {NUMBER} and {NUMBER}.`
-
-For example, if we define `NUMBER_SUN` and `NUMBER_SNOW`, then
-```
-This year, South of Finland had on average 
-{NUMBER_SUN} days of sunshine and {NUMBER_SNOW} of days snowfall.
-```
-
-results in
-```
-This year, South of Finland had on average 
-50 days of sunshine and 3 of days snowfall.
-```
 
 ## Glue!
 
