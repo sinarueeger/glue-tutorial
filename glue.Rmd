@@ -93,10 +93,10 @@ The R package [glue](https://github.com/tidyverse/glue) does exactly that.
 
 Here is an example: 
 ```{r, comment = "", tidy = FALSE}
-NUMBER_SUN <- 50
-NUMBER_SNOW <- 3
-glue("This year, South of Finland had on average {NUMBER_SUN} 
-     days of sunshine and {NUMBER_SNOW} of days snowfall.")
+sun <- 50
+snow <- 3
+glue("This year, South of Finland had on average {sun} 
+     days of sunshine and {snow} of days snowfall.")
 ```
 
 If you have used the function `paste` before, then think of glue as the tidyverse answer to paste. 

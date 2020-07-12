@@ -356,16 +356,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 100 x 3
    id     state         height
    &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
- 1 id_253 Uusimaa         168.
- 2 id_982 Ostrobothnia    162.
- 3 id_823 Ostrobothnia    165.
- 4 id_107 South Karelia   176.
- 5 id_326 Lapland         182.
- 6 id_451 Lapland         162.
- 7 id_562 Lapland         151.
- 8 id_885 South Karelia   180.
- 9 id_921 South Karelia   183.
-10 id_932 Lapland         172.
+ 1 id_406 Ostrobothnia    198.
+ 2 id_854 Uusimaa         193.
+ 3 id_205 South Karelia   167.
+ 4 id_844 South Karelia   174.
+ 5 id_450 Lapland         189.
+ 6 id_211 Lapland         172.
+ 7 id_503 Uusimaa         192.
+ 8 id_560 Uusimaa         151.
+ 9 id_566 Lapland         192.
+10 id_189 Ostrobothnia    181.
 # … with 90 more rows</code></pre>
 <p>And you would like to make a statement in an R markdown file as follows:</p>
 <pre><code>```{r}
@@ -416,10 +416,10 @@ NUMBER_SNOW + &quot;of days snowfall.&quot;</code></pre>
 <h2>Glue!</h2>
 <p>The R package <a href="https://github.com/tidyverse/glue">glue</a> does exactly that.</p>
 <p>Here is an example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">NUMBER_SUN &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">NUMBER_SNOW &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;This year, South of Finland had on average {NUMBER_SUN} </span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">     days of sunshine and {NUMBER_SNOW} of days snowfall.&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">sun &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">snow &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;This year, South of Finland had on average {sun} </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">     days of sunshine and {snow} of days snowfall.&quot;</span>)</a></code></pre></div>
 <pre><code>This year, South of Finland had on average 50 
 days of sunshine and 3 of days snowfall.</code></pre>
 <p>If you have used the function <code>paste</code> before, then think of glue as the tidyverse answer to paste.</p>
