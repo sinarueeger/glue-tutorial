@@ -69,15 +69,17 @@ write_tsv(data, path = "{dir_t}{basename}.tsv")
 
 ## Glue!
 
+To tackle these two problems, we need a solution that combines R data objects into strings.
+
 The R package [glue](https://github.com/tidyverse/glue) does exactly that. 
 
-Here is the example from before: 
+Here is an example: 
 ```{r, comment = "", tidy = FALSE}
+NUMBER_SUN <- 50
+NUMBER_SNOW <- 3
 glue("This year, South of Finland had on average {NUMBER_SUN} 
-     days of sunshine and {NUMBER_SNOW} of days snowfall.", 
-     NUMBER_SUN = 50, NUMBER_SNOW = 3)
+     days of sunshine and {NUMBER_SNOW} of days snowfall.")
 ```
-
 
 If you have used the function `paste` before, then think of glue as the tidyverse answer to paste. 
 
@@ -94,10 +96,7 @@ Explore all functions:
 apropos("glue")
 ```
 
-We are going to look at
-- `glue`
-- `glue_collapse`
-- `glue_data`
+We are going to use `glue` and `glue_collapse`.
 
 ### Glue two elements
 
@@ -115,14 +114,15 @@ number <- 3
 glue("There were {number} {animals}.")
 ```
 
-Glue two elements, but define them within the `glue`` command.
+Glue two elements, but define them within the `glue` command.
 ```{r}
 glue("There were {number} {animals}.", number = 2, animals = "Giraffe")
 ```
 
 ### Exercise
 
-Tweak the following R command so that it returns: `Yesterdays average temperature was 20.2 celsius.`
+Tweak the following R command so that it returns: 
+`Yesterdays average temperature was 20.2 celsius.`
 
 ```{r, eval = FALSE}
 metric <- "celsius"
@@ -168,9 +168,6 @@ cat(htmltools::includeText("helper_solution.Rmd"))
 ```
 
 ### 2. Combine directory and file name
-
-Lastly, to answer problem 3) from the beginning: 
-
 
 ```{r, eval = FALSE}
 dir_p <- "/data/plots/"
