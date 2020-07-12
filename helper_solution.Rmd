@@ -2,4 +2,4 @@
 states <- c("Ostrobothnia", "Uusimaa", "South Karelia", "Lapland")
 ```
 The study participants were from four different Finnish states: 
-`r glue(states, sep = ", ", last = " and ")`. 
+`r glue_collapse(states, sep = ", ", last = " and ")`. 
