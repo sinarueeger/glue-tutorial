@@ -9,10 +9,9 @@ output:
     lib_dir: libs
     nature:
       beforeInit: "https://platform.twitter.com/widgets.js"
-      highlightStyle: github
+      highlightStyle: sunburst
       highlightLines: true
       titleSlideClass: [top, right]
-      
 ---
 
 <!-- 
