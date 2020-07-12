@@ -1,5 +1,5 @@
 ---
-title: "Glue numbers and letters in R"
+title: "Glue numbers and characters in R"
 subtitle: "Lecture background"
 author: "Sina Rüeger"
 date: "July 13, 2020"

@@ -1,8 +1,10 @@
 ---
-title: "Glue numbers and letters in R"
+title: "Glue numbers and characters in R"
 author: "Sina Rüeger"
 date: "July 13, 2020"
-output: html_document
+output:
+    tint::tintHtml:
+      highlight: "tango"
 ---
 
 ```{r setup, include=FALSE}
@@ -11,7 +13,7 @@ library(dplyr)
 library(glue)
 ```
 
-## Introduction
+## Motivation
 
 Sometimes you want to do the following:
 
@@ -21,7 +23,7 @@ You have a dataset, such as the following data about individuals and their curre
 
 ```{r echo=FALSE}
 n <- 100
-dat_study <- as_tibble(data.frame(id = glue("id_{id}", id = sample(100:999, n)), state = sample(c("Uusimaa", "Ostrobothnia", "South Karelia", "Lapland"), n, replace = TRUE))) 
+dat_study <- tibble(id = as.character(glue("id_{id}", id = sample(100:999, n))), state = sample(c("Uusimaa", "Ostrobothnia", "South Karelia", "Lapland"), n, replace = TRUE))
 dat_study
 ```
 
