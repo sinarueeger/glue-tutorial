@@ -42,7 +42,7 @@ states <- "Ostrobothnia, Uusimaa, South Karelia and Lapland"
 
 ### 2. Custom output file path
 
-During the course of a data analysis, we want to store out data or data visualizations using the same basename `/data/haemoglobin/experiment-2020-07-13`:
+During the course of a data analysis, we want to store out data or data visualizations using the same basename `experiment-2020-07-13`:
 
 ```{r, eval = FALSE}
 ## save a plot
@@ -66,10 +66,28 @@ ggsave("{dir_p}{basename}.pdf")
 write_tsv(data, path = "{dir_t}{basename}.tsv")
 ```
 
+## Solution: Combining R data objects into strings
+
+To tackle these two problems, we need a solution that can combine numbers and characters into strings.
+
+`This is some text + NUMBER + TEXT.`
+
+For example, if we define `N_SUN` and `N_SNOW`, then
+```
+SUN = 50
+SNOW = 3
+"This year, South of Finland had on average" + 
+NUMBER_SUN + "days of sunshine and" + 
+NUMBER_SNOW + "of days snowfall."
+```
+
+results in
+```
+This year, South of Finland had on average 
+50 days of sunshine and 3 of days snowfall.
+```
 
 ## Glue!
-
-To tackle these two problems, we need a solution that combines R data objects into strings.
 
 The R package [glue](https://github.com/tidyverse/glue) does exactly that. 
 
@@ -116,7 +134,7 @@ glue("There were {number} {animals}.")
 
 Glue two elements, but define them within the `glue` command.
 ```{r}
-glue("There were {number} {animals}.", number = 2, animals = "Giraffe")
+glue("There were {number} {animals}.", number = 2, animals = "Giraffes")
 ```
 
 ### Exercise

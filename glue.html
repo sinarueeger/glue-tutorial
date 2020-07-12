@@ -356,16 +356,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 100 x 3
    id     state         height
    &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
- 1 id_781 Uusimaa         176.
- 2 id_605 Uusimaa         175.
- 3 id_300 Ostrobothnia    150.
- 4 id_992 Uusimaa         173.
- 5 id_603 Lapland         164.
- 6 id_246 South Karelia   183.
- 7 id_981 Ostrobothnia    195.
- 8 id_568 Uusimaa         188.
- 9 id_625 Ostrobothnia    194.
-10 id_569 Uusimaa         158.
+ 1 id_866 Lapland         200.
+ 2 id_457 Uusimaa         182.
+ 3 id_995 Lapland         179.
+ 4 id_222 Lapland         181.
+ 5 id_802 Ostrobothnia    194.
+ 6 id_928 Lapland         178.
+ 7 id_143 Uusimaa         162.
+ 8 id_733 South Karelia   163.
+ 9 id_495 Lapland         173.
+10 id_217 Lapland         162.
 # … with 90 more rows</code></pre>
 <p>And you would like to make a statement in an R markdown file as follows:</p>
 <pre><code>```{r}
@@ -380,7 +380,7 @@ The study participants were from four different Finnish states:
 </div>
 <div id="custom-output-file-path" class="section level3">
 <h3>2. Custom output file path</h3>
-<p>During the course of a data analysis, we want to store out data or data visualizations using the same basename <code>/data/haemoglobin/experiment-2020-07-13</code>:</p>
+<p>During the course of a data analysis, we want to store out data or data visualizations using the same basename <code>experiment-2020-07-13</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## save a plot</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">ggsave</span>(<span class="st">&quot;/data/plots/experiment-2020-07-13.pdf&quot;</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
@@ -398,26 +398,39 @@ The study participants were from four different Finnish states:
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw">write_tsv</span>(data, <span class="dt">path =</span> <span class="st">&quot;{dir_t}{basename}.tsv&quot;</span>)</a></code></pre></div>
 </div>
 </div>
+<div id="solution-combining-r-data-objects-into-strings" class="section level2">
+<h2>Solution: Combining R data objects into strings</h2>
+<p>To tackle these two problems, we need a solution that can combine numbers and characters into strings.</p>
+<p><code>This is some text + NUMBER + TEXT.</code></p>
+<p>For example, if we define <code>N_SUN</code> and <code>N_SNOW</code>, then</p>
+<pre><code>SUN = 50
+SNOW = 3
+&quot;This year, South of Finland had on average&quot; + 
+NUMBER_SUN + &quot;days of sunshine and&quot; + 
+NUMBER_SNOW + &quot;of days snowfall.&quot;</code></pre>
+<p>results in</p>
+<pre><code>This year, South of Finland had on average 
+50 days of sunshine and 3 of days snowfall.</code></pre>
+</div>
 <div id="glue" class="section level2">
 <h2>Glue!</h2>
-<p>To tackle these two problems, we need a solution that combines R data objects into strings.</p>
 <p>The R package <a href="https://github.com/tidyverse/glue">glue</a> does exactly that.</p>
 <p>Here is an example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">NUMBER_SUN &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">NUMBER_SNOW &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;This year, South of Finland had on average {NUMBER_SUN} </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">     days of sunshine and {NUMBER_SNOW} of days snowfall.&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">NUMBER_SUN &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">NUMBER_SNOW &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;This year, South of Finland had on average {NUMBER_SUN} </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">     days of sunshine and {NUMBER_SNOW} of days snowfall.&quot;</span>)</a></code></pre></div>
 <pre><code>This year, South of Finland had on average 50 
 days of sunshine and 3 of days snowfall.</code></pre>
 <p>If you have used the function <code>paste</code> before, then think of glue as the tidyverse answer to paste.</p>
 </div>
 <div id="live-coding" class="section level2">
 <h2>Live coding</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## install.packages(&quot;glue&quot;)</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">library</span>(glue)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">## install.packages(&quot;glue&quot;)</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">library</span>(glue)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">library</span>(dplyr)</a></code></pre></div>
 <p>Explore all functions:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">apropos</span>(<span class="st">&quot;glue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">apropos</span>(<span class="st">&quot;glue&quot;</span>)</a></code></pre></div>
 <pre><code> [1] &quot;as_glue&quot;        &quot;glue&quot;           &quot;glue_col&quot;       &quot;glue_collapse&quot; 
  [5] &quot;glue_data&quot;      &quot;glue_data_col&quot;  &quot;glue_data_safe&quot; &quot;glue_data_sql&quot; 
  [9] &quot;glue_safe&quot;      &quot;glue_sql&quot;      </code></pre>
@@ -425,39 +438,39 @@ days of sunshine and 3 of days snowfall.</code></pre>
 <div id="glue-two-elements" class="section level3">
 <h3>Glue two elements</h3>
 <p>Glue one element (<code>animals</code>).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">animals &lt;-<span class="st"> &quot;Elephants&quot;</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">glue</span>(<span class="st">&quot;There were {animals}.&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">animals &lt;-<span class="st"> &quot;Elephants&quot;</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">glue</span>(<span class="st">&quot;There were {animals}.&quot;</span>)</a></code></pre></div>
 <pre><code>There were Elephants.</code></pre>
 <p>Glue two elements.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">number &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">glue</span>(<span class="st">&quot;There were {number} {animals}.&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">number &lt;-<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">glue</span>(<span class="st">&quot;There were {number} {animals}.&quot;</span>)</a></code></pre></div>
 <pre><code>There were 3 Elephants.</code></pre>
 <p>Glue two elements, but define them within the <code>glue</code> command.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">glue</span>(<span class="st">&quot;There were {number} {animals}.&quot;</span>, <span class="dt">number =</span> <span class="dv">2</span>, <span class="dt">animals =</span> <span class="st">&quot;Giraffe&quot;</span>)</a></code></pre></div>
-<pre><code>There were 2 Giraffe.</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">glue</span>(<span class="st">&quot;There were {number} {animals}.&quot;</span>, <span class="dt">number =</span> <span class="dv">2</span>, <span class="dt">animals =</span> <span class="st">&quot;Giraffes&quot;</span>)</a></code></pre></div>
+<pre><code>There were 2 Giraffes.</code></pre>
 </div>
 <div id="exercise" class="section level3">
 <h3>Exercise</h3>
 <p>Tweak the following R command so that it returns: <code>Yesterdays average temperature was 20.2 celsius.</code></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">metric &lt;-<span class="st"> &quot;celsius&quot;</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">temperature &lt;-<span class="st"> </span><span class="fl">20.2</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;Yesterdays average temperature was [metric] [temperature].&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">metric &lt;-<span class="st"> &quot;celsius&quot;</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">temperature &lt;-<span class="st"> </span><span class="fl">20.2</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">glue</span>(<span class="st">&quot;Yesterdays average temperature was [metric] [temperature].&quot;</span>)</a></code></pre></div>
 </div>
 <div id="collapse-vector" class="section level3">
 <h3>Collapse vector</h3>
 <p>Collapse the elements in a vector</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FTO&quot;</span>, <span class="st">&quot;PSCK3&quot;</span>, <span class="st">&quot;DTN3&quot;</span>)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">glue_collapse</span>(genes)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FTO&quot;</span>, <span class="st">&quot;PSCK3&quot;</span>, <span class="st">&quot;DTN3&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">glue_collapse</span>(genes)</a></code></pre></div>
 <pre><code>FTOPSCK3DTN3</code></pre>
 <p>Collapse the elements and separate them with a <code>+</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">glue_collapse</span>(genes, <span class="dt">sep =</span> <span class="st">&quot; + &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">glue_collapse</span>(genes, <span class="dt">sep =</span> <span class="st">&quot; + &quot;</span>)</a></code></pre></div>
 <pre><code>FTO + PSCK3 + DTN3</code></pre>
 </div>
 <div id="exercise-1" class="section level3">
 <h3>Exercise</h3>
 <p>Predict the output of the following R code and choose solution 1, 2, 3 or 4 below.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">trees &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;pine&quot;</span>, <span class="st">&quot;fir&quot;</span>, <span class="st">&quot;cedar&quot;</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">glue_collapse</span>(trees, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">last =</span> <span class="st">&quot;and&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">trees &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;pine&quot;</span>, <span class="st">&quot;fir&quot;</span>, <span class="st">&quot;cedar&quot;</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">glue_collapse</span>(trees, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">last =</span> <span class="st">&quot;and&quot;</span>)</a></code></pre></div>
 <pre><code>pine,firandcedar</code></pre>
 <ol style="list-style-type: decimal">
 <li><code>pine, fir and cedar</code></li>
@@ -479,15 +492,15 @@ The study participants were from four different Finnish states:
 </div>
 <div id="combine-directory-and-file-name" class="section level3">
 <h3>2. Combine directory and file name</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">dir_p &lt;-<span class="st"> &quot;/data/plots/&quot;</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">dir_t &lt;-<span class="st"> &quot;/data/tables/&quot;</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">basename &lt;-<span class="st"> &quot;experiment-2020-07-13&quot;</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">## save a plot</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="kw">ggsave</span>(<span class="kw">glue</span>(<span class="st">&quot;{dir_p}{basename}.pdf&quot;</span>))</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">## save data</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="kw">write_tsv</span>(data, <span class="dt">path =</span> <span class="kw">glue</span>(<span class="st">&quot;{dir_t}{basename}.tsv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">dir_p &lt;-<span class="st"> &quot;/data/plots/&quot;</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">dir_t &lt;-<span class="st"> &quot;/data/tables/&quot;</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">basename &lt;-<span class="st"> &quot;experiment-2020-07-13&quot;</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">## save a plot</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="kw">ggsave</span>(<span class="kw">glue</span>(<span class="st">&quot;{dir_p}{basename}.pdf&quot;</span>))</a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">## save data</span></a>
+<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="kw">write_tsv</span>(data, <span class="dt">path =</span> <span class="kw">glue</span>(<span class="st">&quot;{dir_t}{basename}.tsv&quot;</span>))</a></code></pre></div>
 </div>
 </div>
 <div id="find-out-more" class="section level2">

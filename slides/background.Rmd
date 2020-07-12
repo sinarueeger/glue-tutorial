@@ -42,7 +42,8 @@ The learner persona I am addressing:
 - studied biology, hence not a statistician and not a computer scientist
 
 ## Experience
-- uses R a few times per week, on average 2 hours per day.
+- uses R a few times per week, on average 2 hours per day
+- knows RMarkdown
 - used the function `paste` before
 - has not seen `glue`
 
